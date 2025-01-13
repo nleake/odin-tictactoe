@@ -2,12 +2,15 @@ const cells = document.querySelectorAll('.cell');
 const statusText = document.querySelector('#statusText');
 const restartButton = document.querySelector('#restartBtn');
 const winningCombos = [
+  //horizontal
   [0, 1, 2],
   [3, 4, 5],
   [ 6, 7, 8],
+  //vertical
   [0, 3, 6],
   [1, 4, 7],
   [2, 5, 8],
+  //diagonal
   [0, 4, 8],
   [2, 4, 6]
 ];
@@ -29,7 +32,7 @@ function initializeGame(){
 
 function cellClicked(){
   const cellIndex = this.getAttribute('cellIndex');
-
+//if the cell is already clicked or the game is not running, return
   if(options[cellIndex] !== "" || !running){
     return;
   }
@@ -37,15 +40,18 @@ function cellClicked(){
   updateCell(this, cellIndex);
   checkWinner();
 }
+//update the cell with the current player's mark
 function updateCell(cell, index){
   options[index] = currentPlayer;
   cell.textContent = currentPlayer;
 
 }
+//change the player and update the status text
 function changePlayer(){
   currentPlayer = (currentPlayer === "X") ? "O" : "X";
   statusText.textContent = `${currentPlayer}'s turn`;
 }
+//check if there is a winner or a draw
 function checkWinner(){
   let winner = false;
   for (let i = 0; i < winningCombos.length; i++){
